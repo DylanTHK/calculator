@@ -1,0 +1,86 @@
+:root {
+    --primaryColour: gray;
+    --secondaryColour: black;
+    --primaryTextColour: black;
+    --secondaryTextColour: white;
+    --innerCalculatorWidth: 300px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2rem;
+}
+
+/**************************
+inner items (display and buttons)
+**************************/
+#calculator-inner-container {
+    background-color: var(--primaryColour);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    border-radius: 15px;
+}
+
+/**************************
+calculator display
+**************************/
+
+#calculator-display {
+    display: flex;
+    border-style: solid;
+    border-width: 2px;
+    height: 200px;
+    width: var(--innerCalculatorWidth);
+    margin-bottom: 20px;
+    border-radius: 15px;
+}
+
+/**************************
+calculator buttons
+**************************/
+
+#calculator-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: var(--innerCalculatorWidth);
+    gap: .5rem;
+    
+}
+
+#calculator-buttons > button {
+    height: 3rem;
+    border-radius: 50px;
+    border-style: solid;
+    border-width: 2px;
+    border-color: var(--secondaryColour)
+}
+#calculator-buttons > button:hover {
+    transform: scale(1.1);
+    color:
+}
+
+.all-clear {
+    grid-column: 1 / 3;
+}
+
+.equal {
+    grid-column: 3 / 5;
+}
+
+/**************************
+footer settings
+**************************/
+
+.footer {
+    display: flex;
+}
+

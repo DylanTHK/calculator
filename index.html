@@ -5,33 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dylan's Web Calculator</title>
+    <link rel="stylesheet" href="style.css">    
+    <script src="https://kit.fontawesome.com/4c536a6bd5.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <title>Etch-A-Sketch</title>
 </head>
 <body>
     <section id="calculator-container">
-        <div id="calculator-display">
-            <div id="top-display"></div>
-            <div id="bot-display"></div>
-        </div>
-        <div id="calculator-buttons">
-            <button class="all-clear">AC</button>
-            <button class="clear">C</button>
-            <button class="operator" id="add">+</button>
-            <button class="digit" id="digit-1">1</button>
-            <button class="digit" id="digit-2">2</button>
-            <button class="digit" id="digit-3">3</button>
-            <button class="operator" id="subtract">-</button>
-            <button class="digit" id="digit-4">4</button>
-            <button class="digit" id="digit-5">5</button>
-            <button class="digit" id="digit-6">6</button>
-            <button class="operator" id="multiply">×</button>
-            <button class="digit" id="digit-7">7</button>
-            <button class="digit" id="digit-8">8</button>
-            <button class="digit" id="digit-9">9</button>
-            <button class="operator" id="divide">÷</button>
-            <button class="digit" id="digit-0">0</button>
-            <button class="digit" id="digit-decimal">.</button>
-            <button class="equal">=</button>
+        <div id="calculator-inner-container">
+            <div id="calculator-display">
+                <div id="top-display"></div>
+                <div id="bot-display"></div>
+            </div>
+            <div id="calculator-buttons">
+                <button class="all-clear">AC</button>
+                <button class="clear">C</button>
+                <button class="operator" id="add">+</button>
+                <button class="digit" id="digit-1">1</button>
+                <button class="digit" id="digit-2">2</button>
+                <button class="digit" id="digit-3">3</button>
+                <button class="operator" id="subtract">-</button>
+                <button class="digit" id="digit-4">4</button>
+                <button class="digit" id="digit-5">5</button>
+                <button class="digit" id="digit-6">6</button>
+                <button class="operator" id="multiply">×</button>
+                <button class="digit" id="digit-7">7</button>
+                <button class="digit" id="digit-8">8</button>
+                <button class="digit" id="digit-9">9</button>
+                <button class="operator" id="divide">÷</button>
+                <button class="digit" id="digit-0">0</button>
+                <button class="digit" id="digit-decimal">.</button>
+                <button class="equal">=</button>
+            </div>
         </div>
     </section>
+    <footer class="footer">
+        <p>Copyright ©
+          <script>
+            document.write(new Date().getFullYear())
+          </script>
+          DylanTHK</p>
+        <a href="https://github.com/DylanTHK" target="_blank">
+          <i class="fab fa-github"></i></a>
+      </footer>   
+    <script src="app.js"></script>
 </body>
 </html>
