@@ -36,12 +36,26 @@ calculator display
 
 #calculator-display {
     display: flex;
+    flex-direction: column;
+    justify-content: space-around;
     border-style: solid;
     border-width: 2px;
     height: 200px;
     width: var(--innerCalculatorWidth);
     margin-bottom: 20px;
     border-radius: 15px;
+}
+
+#top-display {
+    background-color: aqua;
+    border-style: solid;
+    font-size: 1.5rem;
+}
+
+#bot-display {
+    background-color: blueviolet;
+    border-style: solid;
+    font-size: 2rem;
 }
 
 /**************************
@@ -57,15 +71,29 @@ calculator buttons
 }
 
 #calculator-buttons > button {
-    height: 3rem;
-    border-radius: 50px;
+    font-size: 1.2rem;
+    height: 3em;
+    border-radius: 2.5rem;
     border-style: solid;
     border-width: 2px;
-    border-color: var(--secondaryColour)
+    border-color: var(--secondaryColour);
+    /* box-shadow: 0 5px #999; */
 }
+
 #calculator-buttons > button:hover {
     transform: scale(1.1);
-    color:
+    background-color: darkgray;
+    color: var(--secondaryTextColour);
+}
+
+#calculator-buttons > button:hover {
+    transform: scale(1.1);
+    background-color: darkgray;
+    color: var(--secondaryTextColour);
+}
+
+#calculator-buttons > button:active {
+    transform: translateY(4px);
 }
 
 .all-clear {
