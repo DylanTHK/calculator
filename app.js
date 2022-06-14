@@ -2,7 +2,7 @@
 let currentValue = ""; // store mathematical outcome
 let newValue = ""; // new temporary variable goes here
 let upperDisplay = ""; // string to display at top of the calculator
-let lowerDisplay = "0"; // bottom display
+let lowerDisplay = ""; // bottom display
 let operatorSelected = "";
 
 // assign variables to buttons to allow detection when pressed
@@ -12,18 +12,15 @@ let digitButton = document.querySelectorAll(".digit");
 let operatorButton = document.querySelectorAll(".operator");
 let equalButton = document.querySelector(".equalBtn");
 
-// event listener for digit buttons
+// event listener for 
+// digit, operator, equal, all clear, clear buttons, 
 digitButton.forEach(button => 
     button.addEventListener("click", () => combineNumbers(button.textContent)));
-
-// event listener for operator buttons
 operatorButton.forEach(button => 
     button.addEventListener("click", () => detectOperator(button.textContent)));
-
-// event listener for equal button
 equalButton.addEventListener("click", () => evaluate());
 // event listener for clear button
-
+clearButton.addEventListener("click", () => clearBottom());
 // event listener for all clear button
 
 // **************** 1. Occurs when digit buttons are pressed ****************
@@ -31,7 +28,8 @@ equalButton.addEventListener("click", () => evaluate());
 // b) update new value
 // c) call function to display new value
 function combineNumbers(newNumber) {
-    lowerDisplay = parseInt(lowerDisplay + newNumber);
+    // lowerDisplay = parseInt(lowerDisplay + newNumber);
+    lowerDisplay += newNumber;
     newValue = lowerDisplay;
     updateBottomDisplay(lowerDisplay);
 }
@@ -64,7 +62,7 @@ function updateTopDisplay(equation, operator) {
     topDisplay.textContent = upperDisplay;
 }
 
-// **************** 3. Occurs when equal button are pressed ****************
+// **************** 3. Occurs when equal button depressed ****************
 // a)calculate currentValue, b)update upperDisplay, c)update lowerDisplay
 function evaluate() {
     if (operatorSelected === "÷") {
@@ -81,6 +79,7 @@ function evaluate() {
     updateBottomDisplay(currentValue);
 }
 
+// arithmatic functions 
 function addition(current, num2) {
     return current + num2;
 }
@@ -95,4 +94,17 @@ function multiplication(current, num2) {
 
 function division(current, num2) {
     return current / num2;
+}
+
+// **************** 4. Occurs when clear button depressed ****************
+// removes last item in the bottom display
+function clearBottom() {
+    let stringLength = lowerDisplay.length;
+    if (stringLength > 1) {
+        lowerDisplay = lowerDisplay.substring(0, lowerDisplay.length-1);
+    } else {
+        lowerDisplay = "";
+    }
+
+    updateBottomDisplay(lowerDisplay);
 }
