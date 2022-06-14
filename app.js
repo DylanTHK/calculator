@@ -1,8 +1,8 @@
 // set variables 
 let currentValue = ""; // store mathematical outcome
-let upperString = "";
-let upperDisplay = "";
-let lowerDisplay = ""; // bottom display
+let newValue = ""; // new temporary variable goes here
+let upperDisplay = ""; // string to display at top of the calculator
+let lowerDisplay = "0"; // bottom display
 let operatorSelected = "";
 
 // assign variables to buttons to allow detection when pressed
@@ -21,15 +21,18 @@ operatorButton.forEach(button =>
     button.addEventListener("click", () => detectOperator(button.textContent)));
 
 // event listener for equal button
-
+equalButton.addEventListener("click", () => evaluate());
 // event listener for clear button
 
 // event listener for all clear button
 
-// **************** 1. Taking in first digits ****************
-// function to combine new number with existing number
+// **************** 1. Occurs when digit buttons are pressed ****************
+// a) function to combine new number with existing number
+// b) update new value
+// c) call function to display new value
 function combineNumbers(newNumber) {
-    lowerDisplay += newNumber;
+    lowerDisplay = parseInt(lowerDisplay + newNumber);
+    newValue = lowerDisplay;
     updateBottomDisplay(lowerDisplay);
 }
 
@@ -40,26 +43,43 @@ function updateBottomDisplay(displayNum) {
     botDisplay.textContent = displayNum;
 }
 
-// **************** 2. Taking operator  ****************
+// **************** 2. Occurs when operator buttons are pressed ****************
 // function to detect type of operator used
 function detectOperator(operator) {
     operatorSelected = operator;
-    // push numDisplayBot to currentValue
+    // push lowerDisplay to currentValue
     currentValue = lowerDisplay;
-    upperString += lowerDisplay;
-    numDisplayBot = ""; // reset numDisplayBot
+    upperDisplay += lowerDisplay;
+    lowerDisplay = ""; // reset lower display
 
     // call updateTopDisplay
-    updateTopDisplay(upperString, operatorSelected);
+    updateTopDisplay(upperDisplay, operatorSelected);
 
 };
 
 // to update upper display
 function updateTopDisplay(equation, operator) {
     let topDisplay = document.querySelector("#top-display");
-    topDisplay.textContent = equation + " " + operator;
+    upperDisplay = equation + " " + operator
+    topDisplay.textContent = upperDisplay;
 }
 
+// **************** 3. Occurs when equal button are pressed ****************
+// a)calculate currentValue, b)update upperDisplay, c)update lowerDisplay
+function evaluate() {
+    if (operatorSelected === "÷") {
+        currentValue = division(currentValue, newValue);
+    } else if (operatorSelected === "×") {
+        currentValue = multiplication(currentValue, newValue);
+    } else if (operatorSelected === "+") {
+        currentValue = addition(currentValue, newValue);
+    } else if (operatorSelected === "-") {
+        currentValue = subtraction(currentValue, newValue);
+    };
+    upperDisplay = upperDisplay + " " + newValue;
+    updateTopDisplay(upperDisplay, "=")
+    updateBottomDisplay(currentValue);
+}
 
 function addition(current, num2) {
     return current + num2;
