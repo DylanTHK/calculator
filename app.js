@@ -1,5 +1,5 @@
 // set variables 
-let currentValue = ""; // store mathematical outcome
+let currentValue = ""; // store mathematical outcome (int)
 let newValue = ""; // new temporary variable goes here
 let upperDisplay = ""; // string to display at top of the calculator
 let lowerDisplay = ""; // bottom display
@@ -22,6 +22,10 @@ equalButton.addEventListener("click", () => evaluate());
 // event listener for clear button
 clearButton.addEventListener("click", () => clearBottom());
 // event listener for all clear button
+allClearButton.addEventListener("click", () => allClear());
+
+let topDisplay = document.querySelector("#top-display");
+let botDisplay = document.querySelector("#bot-display");
 
 // **************** 1. Occurs when digit buttons are pressed ****************
 // a) function to combine new number with existing number
@@ -37,7 +41,6 @@ function combineNumbers(newNumber) {
 // function to update the bottom display
 function updateBottomDisplay(displayNum) {
     // get bot display and assign text as displayNum
-    let botDisplay = document.querySelector("#bot-display");
     botDisplay.textContent = displayNum;
 }
 
@@ -53,11 +56,10 @@ function detectOperator(operator) {
     // call updateTopDisplay
     updateTopDisplay(upperDisplay, operatorSelected);
 
-};
+}
 
 // to update upper display
 function updateTopDisplay(equation, operator) {
-    let topDisplay = document.querySelector("#top-display");
     upperDisplay = equation + " " + operator
     topDisplay.textContent = upperDisplay;
 }
@@ -81,7 +83,7 @@ function evaluate() {
 
 // arithmatic functions 
 function addition(current, num2) {
-    return current + num2;
+    return parseInt(current) + parseInt(num2);
 }
 
 function subtraction(current, num2) {
@@ -105,6 +107,16 @@ function clearBottom() {
     } else {
         lowerDisplay = "";
     }
-
     updateBottomDisplay(lowerDisplay);
+}
+
+// **************** 5. Occurs when all clear button depressed ****************
+function allClear() {
+    currentValue = ""; 
+    newValue = ""; 
+    upperDisplay = ""; 
+    lowerDisplay = ""; 
+    operatorSelected = "";
+    topDisplay.textContent = upperDisplay;
+    botDisplay.textContent = lowerDisplay;
 }
