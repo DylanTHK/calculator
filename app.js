@@ -1,8 +1,8 @@
 // set variables 
-let currentValue = "";
-let newNumber = "";
-let numDisplayTop = "";
-let numDisplayBot = ""; // bottom display
+let currentValue = ""; // store mathematical outcome
+let upperString = "";
+let upperDisplay = "";
+let lowerDisplay = ""; // bottom display
 let operatorSelected = "";
 
 // assign variables to buttons to allow detection when pressed
@@ -26,46 +26,11 @@ operatorButton.forEach(button =>
 
 // event listener for all clear button
 
-function addition(num1, num2) {
-    return num1 + num2;
-}
-
-function subtraction(num1, num2) {
-    return num1 - num2;
-}
-
-function multiplication(num1, num2) {
-    return num1 * num2;
-}
-
-function division(num1, num2) {
-    return num1 / num2;
-}
-
-// function to detect type of operator used
-function detectOperator(operator) {
-    if (operator === "×") {
-        operatorSelected = "*";
-    } else if (operator === "÷") {
-        operatorSelected = "/";
-    } else if (operator === "-") {
-        operatorSelected = "-";
-    } else {
-        operatorSelected = "+";
-    }
-    // call updateTopDisplay
-
-    // push numDisplayBot to currentValue
-
-    // rest numDisplayBot
-
-
-};
-
+// **************** 1. Taking in first digits ****************
 // function to combine new number with existing number
 function combineNumbers(newNumber) {
-    numDisplayBot += newNumber;
-    updateBottomDisplay(numDisplayBot);
+    lowerDisplay += newNumber;
+    updateBottomDisplay(lowerDisplay);
 }
 
 // function to update the bottom display
@@ -75,3 +40,39 @@ function updateBottomDisplay(displayNum) {
     botDisplay.textContent = displayNum;
 }
 
+// **************** 2. Taking operator  ****************
+// function to detect type of operator used
+function detectOperator(operator) {
+    operatorSelected = operator;
+    // push numDisplayBot to currentValue
+    currentValue = lowerDisplay;
+    upperString += lowerDisplay;
+    numDisplayBot = ""; // reset numDisplayBot
+
+    // call updateTopDisplay
+    updateTopDisplay(upperString, operatorSelected);
+
+};
+
+// to update upper display
+function updateTopDisplay(equation, operator) {
+    let topDisplay = document.querySelector("#top-display");
+    topDisplay.textContent = equation + " " + operator;
+}
+
+
+function addition(current, num2) {
+    return current + num2;
+}
+
+function subtraction(current, num2) {
+    return current - num2;
+}
+
+function multiplication(current, num2) {
+    return current * num2;
+}
+
+function division(current, num2) {
+    return current / num2;
+}
