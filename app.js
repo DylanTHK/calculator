@@ -1,4 +1,8 @@
-let currentOperation = "";
+let previousValue = "";
+let currentValue = "";
+let operationState = false;
+let currentOperation = null;
+
 
 // assign variables to HTML elements
 let digitButton = document.querySelectorAll(".digit");
@@ -14,11 +18,9 @@ let botDisplay = document.querySelector("#bot-display");
 // eventlisteners for all calculator buttons (digits, operator, AC, C)
 digitButton.forEach(button => 
     button.addEventListener("click", () => appendNumber(button.textContent)));
-
 operatorButton.forEach(button => 
-    button.addEventListener("click", () => console.log(button)));
-
-equalButton.addEventListener("click", () => console.log(equalButton));
+    button.addEventListener("click", () => evaluate(button.textContent)));
+equalButton.addEventListener("click", () => operate(currentOperation, currentValue, previousValue));
 allClearButton.addEventListener("click", () => console.log(allClearButton));
 clearButton.addEventListener("click", () => console.log(clearButton));
 
@@ -26,16 +28,50 @@ clearButton.addEventListener("click", () => console.log(clearButton));
 // **************** 1. Occurs when digit button depressed ****************
 // function to add numbers to current operations (bottom)
 function appendNumber(newNumber) {
-    let temp = botDisplay.textContent + newNumber;
-    botDisplay.textContent = parseInt(temp).toString();
+    currentValue += newNumber;
+    updateBotDisplay(currentValue);
 }
 
+function updateBotDisplay(number) {
+    botDisplay.textContent = parseInt(number).toString();
+}
+
+
 // **************** 2. Occurs when operator button depressed ****************
+// checks if to call operate() or wait for 1 more number
+function evaluate(operator) {
+    if (!operationState) {
+        currentOperation = operator;
+        previousValue = currentValue;
+        currentValue = "";
+        operationState = true;
+    } else {
+        previousValue = operate(currentOperation, previousValue, currentValue)
+        currentOperation = operator;
+        currentValue = "";
+    }
+}
 
 
 // **************** . Occurs when operator or equal button depressed ****************
-function operate(operator, current, newNum) {
-
+function operate(operator, A, B) {
+    if (operator === "×") {
+        let value = multiplication(A,B);
+        updateBotDisplay(value);
+        return value;
+    } else if (operator === "÷") {
+        let value = division(A,B);
+        updateBotDisplay(value);
+        return value;
+    } else if (operator === "+") {
+        let value = addition(A,B);
+        updateBotDisplay(value);
+        return value;
+    } else {
+        let value = subtraction(A,B);
+        updateBotDisplay(value);
+        return value;
+    }
 }
 
 // Arithmetic functions 
