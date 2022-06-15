@@ -1,8 +1,8 @@
+// temporary variables for calculator operation
 let previousValue = "";
 let currentValue = "";
 let operationState = false;
 let currentOperation = null;
-
 
 // assign variables to HTML elements
 let digitButton = document.querySelectorAll(".digit");
@@ -21,11 +21,24 @@ digitButton.forEach(button =>
     button.addEventListener("click", () => appendNumber(button.textContent)));
 operatorButton.forEach(button => 
     button.addEventListener("click", () => evaluate(button.textContent)));
+decimalButton.addEventListener("click", () => addDecimal(currentValue));
 equalButton.addEventListener("click", () => operate(currentOperation, previousValue, currentValue));
 allClearButton.addEventListener("click", () => allClear(allClearButton));
 clearButton.addEventListener("click", () => clearLast(clearButton));
-decimalButton.addEventListener("click", () => addDecimal(currentValue));
 
+// to allow for keyboard shortcuts to work with calculator
+window.addEventListener("keydown", e => manageKeyBoard(e.key));
+
+function manageKeyBoard(key) {
+    if (key >= 0 & key <= 9) appendNumber(key);
+    if (key === ".") appendDecimal(currentValue);
+    if (key === "-" | key === "+") evaluate(key);
+    if (key === "/") evaluate("÷");
+    if (key === "*") evaluate("×");
+    if (key === "=" | key === "Enter") operate(currentOperation, previousValue, currentValue);
+    if (key === "Backspace") clearLast(clearButton);
+    if (key === "Escape") allClear(allClearButton);
+}
 
 // **************** 1. Occurs when digit button depressed ****************
 // function to add numbers to current operations (bottom)
@@ -47,7 +60,6 @@ function addDecimal(item) {
         botDisplay.textContent += ".";
     }
 }
-
 
 function updateBotDisplay(value) {
     botDisplay.textContent = value;
