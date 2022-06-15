@@ -1,103 +1,58 @@
-// set variables 
-let currentValue = ""; // store mathematical outcome (int)
-let newValue = ""; // new temporary variable goes here
-let upperDisplay = ""; // string to display at top of the calculator
-let lowerDisplay = ""; // bottom display
-let operatorSelected = "";
+let currentOperation = "";
 
-// assign variables to buttons to allow detection when pressed
-let allClearButton = document.querySelector("#allClearBtn");
-let clearButton = document.querySelector("#clearBtn");
+// assign variables to HTML elements
 let digitButton = document.querySelectorAll(".digit");
 let operatorButton = document.querySelectorAll(".operator");
 let equalButton = document.querySelector(".equalBtn");
+let allClearButton = document.querySelector("#allClearBtn");
+let clearButton = document.querySelector("#clearBtn");
 
-// event listener for 
-// digit, operator, equal, all clear, clear buttons, 
-digitButton.forEach(button => 
-    button.addEventListener("click", () => combineNumbers(button.textContent)));
-operatorButton.forEach(button => 
-    button.addEventListener("click", () => detectOperator(button.textContent)));
-equalButton.addEventListener("click", () => evaluate());
-// event listener for clear button
-clearButton.addEventListener("click", () => clearBottom());
-// event listener for all clear button
-allClearButton.addEventListener("click", () => allClear());
-
+// assign variables for important html elements
 let topDisplay = document.querySelector("#top-display");
 let botDisplay = document.querySelector("#bot-display");
 
-// **************** 1. Occurs when digit buttons are pressed ****************
-// a) function to combine new number with existing number
-// b) update new value
-// c) call function to display new value
-function combineNumbers(newNumber) {
-    // lowerDisplay = parseInt(lowerDisplay + newNumber);
-    lowerDisplay += newNumber;
-    newValue = lowerDisplay;
-    updateBottomDisplay(lowerDisplay);
+// eventlisteners for all calculator buttons (digits, operator, AC, C)
+digitButton.forEach(button => 
+    button.addEventListener("click", () => appendNumber(button.textContent)));
+
+operatorButton.forEach(button => 
+    button.addEventListener("click", () => console.log(button)));
+
+equalButton.addEventListener("click", () => console.log(equalButton));
+allClearButton.addEventListener("click", () => console.log(allClearButton));
+clearButton.addEventListener("click", () => console.log(clearButton));
+
+
+// **************** 1. Occurs when digit button depressed ****************
+// function to add numbers to current operations (bottom)
+function appendNumber(newNumber) {
+    let temp = botDisplay.textContent + newNumber;
+    botDisplay.textContent = parseInt(temp).toString();
 }
 
-// function to update the bottom display
-function updateBottomDisplay(displayNum) {
-    // get bot display and assign text as displayNum
-    botDisplay.textContent = displayNum;
+// **************** 2. Occurs when operator button depressed ****************
+
+
+// **************** . Occurs when operator or equal button depressed ****************
+function operate(operator, current, newNum) {
+
 }
 
-// **************** 2. Occurs when operator buttons are pressed ****************
-// function to detect type of operator used
-function detectOperator(operator) {
-    operatorSelected = operator;
-    if (typeof currentValue !== "number") {
-        currentValue = lowerDisplay; // push lowerDisplay to currentValue
-        upperDisplay += lowerDisplay; // add to the upperDisplay
-        lowerDisplay = ""; // reset lower display
-    } else {
-        upperDisplay = currentValue;
-        lowerDisplay = ""; // reset lower display
-    }
-    // call updateTopDisplay
-    updateTopDisplay(upperDisplay, operatorSelected);
+// Arithmetic functions 
+function addition(current, newNum) {
+    return parseInt(current) + parseInt(newNum);
 }
 
-// to update upper display
-function updateTopDisplay(equation, operator) {
-    upperDisplay = equation + " " + operator
-    topDisplay.textContent = upperDisplay;
+function subtraction(current, newNum) {
+    return current - newNum;
 }
 
-// **************** 3. Occurs when equal button depressed ****************
-// a)calculate currentValue, b)update upperDisplay, c)update lowerDisplay
-function evaluate() {
-    if (operatorSelected === "÷") {
-        currentValue = division(currentValue, newValue);
-    } else if (operatorSelected === "×") {
-        currentValue = multiplication(currentValue, newValue);
-    } else if (operatorSelected === "+") {
-        currentValue = addition(currentValue, newValue);
-    } else if (operatorSelected === "-") {
-        currentValue = subtraction(currentValue, newValue);
-    };
-    upperDisplay = upperDisplay + " " + newValue;
-    updateTopDisplay(upperDisplay, "=")
-    updateBottomDisplay(currentValue);
+function multiplication(current, newNum) {
+    return current * newNum;
 }
 
-// arithmatic functions 
-function addition(current, num2) {
-    return parseInt(current) + parseInt(num2);
-}
-
-function subtraction(current, num2) {
-    return current - num2;
-}
-
-function multiplication(current, num2) {
-    return current * num2;
-}
-
-function division(current, num2) {
-    return current / num2;
+function division(current, newNum) {
+    return current / newNum;
 }
 
 // **************** 4. Occurs when clear button depressed ****************
