@@ -35,12 +35,19 @@ function appendNumber(newNumber) {
         currentValue += newNumber;
     }
     updateBotDisplay(currentValue);
+    if (newNumber === ".") {
+        botDisplay.textContent += "."
+    }
 }
 
 function updateBotDisplay(number) {
-    botDisplay.textContent = number;
+    let value = roundNumber(number)
+    botDisplay.textContent = value;
 }
 
+function roundNumber(num) {
+    return Math.round(num*100) / 100;
+}
 
 // **************** 2. Occurs when operator button depressed ****************
 // checks if to call operate() or wait for 1 more number
@@ -60,14 +67,19 @@ function evaluate(operator) {
 
 // **************** . Occurs when operator or equal button depressed ****************
 function operate(operator, A, B) {
+    if (operator === null) return;
     if (operator === "×") {
         let value = multiplication(A,B);
         updateBotDisplay(value);
         return value;
     } else if (operator === "÷") {
-        let value = division(A,B);
-        updateBotDisplay(value);
-        return value;
+        if (currentValue == 0) {
+            alert("Error! Unable to divide by 0")
+        } else {
+            let value = division(A,B);
+            updateBotDisplay(value);
+            return value;
+        }
     } else if (operator === "+") {
         let value = addition(A,B);
         updateBotDisplay(value);
