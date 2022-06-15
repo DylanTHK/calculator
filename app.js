@@ -20,20 +20,25 @@ digitButton.forEach(button =>
     button.addEventListener("click", () => appendNumber(button.textContent)));
 operatorButton.forEach(button => 
     button.addEventListener("click", () => evaluate(button.textContent)));
-equalButton.addEventListener("click", () => operate(currentOperation, currentValue, previousValue));
-allClearButton.addEventListener("click", () => console.log(allClearButton));
-clearButton.addEventListener("click", () => console.log(clearButton));
+equalButton.addEventListener("click", () => operate(currentOperation, previousValue, currentValue));
+allClearButton.addEventListener("click", () => allClear(allClearButton));
+clearButton.addEventListener("click", () => clearLast(clearButton));
 
 
 // **************** 1. Occurs when digit button depressed ****************
 // function to add numbers to current operations (bottom)
 function appendNumber(newNumber) {
-    currentValue += newNumber;
+    if (currentValue === "0") {
+        currentValue = ""
+        currentValue += newNumber
+    } else {
+        currentValue += newNumber;
+    }
     updateBotDisplay(currentValue);
 }
 
 function updateBotDisplay(number) {
-    botDisplay.textContent = parseInt(number).toString();
+    botDisplay.textContent = number;
 }
 
 
@@ -80,36 +85,34 @@ function addition(current, newNum) {
 }
 
 function subtraction(current, newNum) {
-    return current - newNum;
+    return parseInt(current) - parseInt(newNum);
 }
 
 function multiplication(current, newNum) {
-    return current * newNum;
+    return parseInt(current) * parseInt(newNum);
 }
 
 function division(current, newNum) {
-    return current / newNum;
+    return parseInt(current) / parseInt(newNum);
 }
 
 // **************** 4. Occurs when clear button depressed ****************
 // removes last item in the bottom display
-function clearBottom() {
-    let stringLength = lowerDisplay.length;
+function clearLast() {
+    let stringLength = currentValue.length;
     if (stringLength > 1) {
-        lowerDisplay = lowerDisplay.substring(0, lowerDisplay.length-1);
+        currentValue = currentValue.substring(0, stringLength-1);
     } else {
-        lowerDisplay = "";
+        currentValue = "0"
     }
-    updateBottomDisplay(lowerDisplay);
+    updateBotDisplay(currentValue);
 }
 
 // **************** 5. Occurs when all clear button depressed ****************
 function allClear() {
-    currentValue = ""; 
-    newValue = ""; 
-    upperDisplay = ""; 
-    lowerDisplay = ""; 
-    operatorSelected = "";
-    topDisplay.textContent = "";
+    previousValue = "";
+    currentValue = "0";
+    operationState = false;
+    currentOperation = null;
     botDisplay.textContent = "0";
 }
