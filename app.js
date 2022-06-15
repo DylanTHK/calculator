@@ -48,14 +48,16 @@ function updateBottomDisplay(displayNum) {
 // function to detect type of operator used
 function detectOperator(operator) {
     operatorSelected = operator;
-    // push lowerDisplay to currentValue
-    currentValue = lowerDisplay;
-    upperDisplay += lowerDisplay;
-    lowerDisplay = ""; // reset lower display
-
+    if (typeof currentValue !== "number") {
+        currentValue = lowerDisplay; // push lowerDisplay to currentValue
+        upperDisplay += lowerDisplay; // add to the upperDisplay
+        lowerDisplay = ""; // reset lower display
+    } else {
+        upperDisplay = currentValue;
+        lowerDisplay = ""; // reset lower display
+    }
     // call updateTopDisplay
     updateTopDisplay(upperDisplay, operatorSelected);
-
 }
 
 // to update upper display
@@ -117,6 +119,6 @@ function allClear() {
     upperDisplay = ""; 
     lowerDisplay = ""; 
     operatorSelected = "";
-    topDisplay.textContent = upperDisplay;
-    botDisplay.textContent = lowerDisplay;
+    topDisplay.textContent = "";
+    botDisplay.textContent = "0";
 }
