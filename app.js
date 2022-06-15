@@ -10,6 +10,7 @@ let operatorButton = document.querySelectorAll(".operator");
 let equalButton = document.querySelector(".equalBtn");
 let allClearButton = document.querySelector("#allClearBtn");
 let clearButton = document.querySelector("#clearBtn");
+let decimalButton = document.querySelector("#digit-decimal");
 
 // assign variables for important html elements
 let topDisplay = document.querySelector("#top-display");
@@ -23,6 +24,7 @@ operatorButton.forEach(button =>
 equalButton.addEventListener("click", () => operate(currentOperation, previousValue, currentValue));
 allClearButton.addEventListener("click", () => allClear(allClearButton));
 clearButton.addEventListener("click", () => clearLast(clearButton));
+decimalButton.addEventListener("click", () => addDecimal(currentValue));
 
 
 // **************** 1. Occurs when digit button depressed ****************
@@ -35,13 +37,19 @@ function appendNumber(newNumber) {
         currentValue += newNumber;
     }
     updateBotDisplay(currentValue);
-    if (newNumber === ".") {
-        botDisplay.textContent += "."
+}
+
+function addDecimal(item) {
+    if (item.includes(".")) {
+        return
+    } else {
+        currentValue += ".";
+        botDisplay.textContent += ".";
     }
 }
 
-function updateBotDisplay(number) {
-    let value = roundNumber(number)
+
+function updateBotDisplay(value) {
     botDisplay.textContent = value;
 }
 
@@ -67,28 +75,25 @@ function evaluate(operator) {
 
 // **************** . Occurs when operator or equal button depressed ****************
 function operate(operator, A, B) {
+    let value = "";
     if (operator === null) return;
     if (operator === "×") {
-        let value = multiplication(A,B);
-        updateBotDisplay(value);
-        return value;
+        value = multiplication(A,B);
     } else if (operator === "÷") {
         if (currentValue == 0) {
-            alert("Error! Unable to divide by 0")
+            alert("Error! Unable to divide by 0");
+            return;
         } else {
-            let value = division(A,B);
-            updateBotDisplay(value);
-            return value;
+            value = division(A,B);
         }
     } else if (operator === "+") {
-        let value = addition(A,B);
-        updateBotDisplay(value);
-        return value;
+        value = addition(A,B);
     } else {
-        let value = subtraction(A,B);
-        updateBotDisplay(value);
-        return value;
+        value = subtraction(A,B);
     }
+    value = roundNumber(value);
+    updateBotDisplay(value);
+    return value;
 }
 
 // Arithmetic functions 
